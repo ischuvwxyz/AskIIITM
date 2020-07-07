@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 
 const userRouter = require('./Routes/userRoutes');
+const questRouter = require('./Routes/questRouter');
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -30,5 +31,6 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/quest', questRouter);
 
 module.exports = app;

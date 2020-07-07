@@ -5,52 +5,58 @@ const crypto = require('crypto');
 
 // User Schema
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'A name must be required']
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'A name must be required']
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      unique: [true, 'Exists Already'],
+      required: [true, 'Please provide Email'],
+      validate: [validator.isEmail, 'Please provide correct email']
+    },
+    photo: {
+      type: String,
+      default: 'default.jpg'
+    },
+    password: {
+      type: String,
+      minlength: 8,
+      select: false,
+      required: [true, 'Please enter a password']
+    },
+    confirmPassword: {
+      type: String,
+      required: [true, 'Please confirm your password'],
+      validator: {
+        validate: function (el) {
+          return el === this.password;
+        },
+        message: 'Password not matching'
+      }
+    },
+    active: {
+      type: Boolean,
+      default: true,
+      select: false
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user'
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date
   },
-  email: {
-    type: String,
-    lowercase: true,
-    unique: [true, 'Exists Already'],
-    required: [true, 'Please provide Email'],
-    validate: [validator.isEmail, 'Please provide correct email']
-  },
-  photo: {
-    type: String,
-    default: 'default.jpg'
-  },
-  password: {
-    type: String,
-    minlength: 8,
-    select: false,
-    required: [true, 'Please enter a password']
-  },
-  confirmPassword: {
-    type: String,
-    required: [true, 'Please confirm your password'],
-    validator: {
-      validate: function (el) {
-        return el === this.password;
-      },
-      message: 'Password not matching'
-    }
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
+);
 
 userSchema.pre(/^find/, function (next) {
   this.find({ active: true });
