@@ -28,3 +28,9 @@ exports.getUserById = catchAsync(async (req, res) => {
     }
   });
 });
+
+// exports.updateMe = catchAsync(async (req, res, next) => {
+//   const user = await User.findByIdAndUpdate(req.user.id, {
+//     name:
+//   });
+// });
