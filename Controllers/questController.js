@@ -4,6 +4,8 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.getQuestions = catchAsync(async (req, res, next) => {
   const quests = await Quest.find();
+  if (!quests) return next(new AppError('No questions found', 404));
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -14,6 +16,9 @@ exports.getQuestions = catchAsync(async (req, res, next) => {
 
 exports.getQuestionById = catchAsync(async (req, res, next) => {
   const quest = await Quest.findById(req.params.id);
+
+  if (!quest) return next(new AppError('No question found', 404));
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -24,6 +29,9 @@ exports.getQuestionById = catchAsync(async (req, res, next) => {
 
 exports.getQuestionByUserId = catchAsync(async (req, res, next) => {
   const quests = await Quest.findOne({ user: req.params.userId });
+
+  if (!quests) return next(new AppError('No questions found', 404));
+
   res.status(200).json({
     status: 'success',
     data: {
