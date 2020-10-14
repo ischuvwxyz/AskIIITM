@@ -1,4 +1,5 @@
 const Quest = require('../Models/questModel');
+const User = require('../Models/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -42,7 +43,13 @@ exports.getQuestionByUserId = catchAsync(async (req, res, next) => {
 
 exports.addQuestion = catchAsync(async (req, res, next) => {
   req.body.user = req.user.id;
+  const user = await User.findById(req.user.id);
   const quest = await Quest.create(req.body);
+  if (quest) {
+    user.questions.push(quest._id);
+    user.markModified('questions');
+    user.save({ validateBeforeSave: false });
+  }
   res.status(200).json({
     status: 'success',
     data: {
