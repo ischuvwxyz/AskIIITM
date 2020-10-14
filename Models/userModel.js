@@ -43,6 +43,8 @@ const userSchema = new mongoose.Schema(
       default: true,
       select: false
     },
+    upVoted: [],
+    downVoted: [],
     questions: [],
     role: {
       type: String,
