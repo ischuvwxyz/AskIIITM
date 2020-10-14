@@ -15,7 +15,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res) => {
   res.status(200).json({
     status: 'failure',
-    message: `try /api/v1/users/signup`
+    message: `try /api/v1/user/signup`
   });
 });
 
