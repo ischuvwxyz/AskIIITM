@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema(
       default: true,
       select: false
     },
+    questions: [],
     role: {
       type: String,
       enum: ['user', 'admin'],
