@@ -30,7 +30,7 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/quest', questRouter);
+app.use('/api/v1/', userRouter);
+app.use('/api/v1/', questRouter);
 
 module.exports = app;
