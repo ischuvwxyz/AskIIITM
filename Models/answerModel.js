@@ -12,4 +12,12 @@ const answerSchema = new mongoose.Schema({
   answer: String
 });
 
+answerSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'question',
+    select: 'question -user'
+  });
+  next();
+});
+
 module.exports = mongoose.model('Answer', answerSchema);
