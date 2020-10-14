@@ -18,11 +18,12 @@ const questionSchema = new mongoose.Schema(
   }
 );
 
-questionSchema.pre(/^find/, function () {
+questionSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'name email'
+    select: 'name email -_id'
   });
+  next();
 });
 
 const Quest = mongoose.model('Quest', questionSchema);
