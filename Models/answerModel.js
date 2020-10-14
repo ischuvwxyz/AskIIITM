@@ -9,6 +9,8 @@ const answerSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
+  upVote: Number,
+  downVote: Number,
   answer: String
 });
 
