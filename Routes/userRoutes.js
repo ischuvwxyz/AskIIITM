@@ -24,4 +24,9 @@ router.route('user/:id').get(userController.getUserById);
 router
   .route('/user/votequestion/:questionId')
   .post(authController.protect, userController.voteQuestion);
+
+router
+  .route('/user/voteanswer/:answerId')
+  .post(authController.protect, userController.voteAnswer);
+
 module.exports = router;

@@ -1,4 +1,5 @@
 const Quest = require('../Models/questModel');
+const Answer = require('../Models/answerModel');
 const User = require('../Models/userModel');
 const catchAsync = require('../utils/catchAsync');
 
@@ -44,6 +45,25 @@ exports.voteQuestion = catchAsync(async (req, res, next) => {
   }
   // eslint-disable-next-line no-unused-expressions
   question.save() && user.save({ validateBeforeSave: false });
+  res.status(200).json({
+    status: 'success'
+  });
+});
+
+exports.voteAnswer = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  const answer = await Answer.findById(req.params.answerId);
+  if (answer) {
+    if (req.body.type === 'upvote') {
+      answer.upVote += 1;
+      user.upVoted.push(answer._id);
+    } else if (req.body.type === 'downvote') {
+      answer.downVote += 1;
+      user.downVoted.push(answer._id);
+    }
+  }
+  // eslint-disable-next-line no-unused-expressions
+  answer.save() && user.save({ validateBeforeSave: false });
   res.status(200).json({
     status: 'success'
   });
