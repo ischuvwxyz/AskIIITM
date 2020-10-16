@@ -57,3 +57,11 @@ exports.addQuestion = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+exports.findRecentQuestion = catchAsync(async(req, res, next) => {
+  const questions = await Quest.find({createdAt: {$gt: Date.now() - 24 * 60 * 60 * 1000 * 10}});
+  res.status(200).json({
+    status: "success",
+    questions
+  })
+});
