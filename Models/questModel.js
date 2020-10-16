@@ -6,6 +6,10 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: [true, 'You forgot to ask a question']
     },
+    createdAt: {
+      type: Date,
+      default: Date.now()
+    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
