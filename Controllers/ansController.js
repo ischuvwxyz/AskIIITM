@@ -21,3 +21,11 @@ exports.getUserAnswers = catchAsync(async (req, res, next) => {
     answers
   });
 });
+
+exports.getAnswerForQues = catchAsync(async (req, res, next) => {
+  const answers = await Answer.find({ question: req.params.questionId });
+  res.status(200).json({
+    status: 'success',
+    answers
+  });
+});
