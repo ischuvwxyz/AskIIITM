@@ -5,6 +5,10 @@ const answerSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Quest'
   },
+  createdAt: {
+      type: Date,
+      default: Date.now()
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'

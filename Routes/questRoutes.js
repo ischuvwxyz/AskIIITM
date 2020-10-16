@@ -9,6 +9,7 @@ router
   .post(authController.protect, questController.addQuestion);
 
 router.route('/quest/:id').get(questController.getQuestionById);
+router.route('/quest').get(questController.findRecentQuestion);
 router.route('/quest/?userId').get(questController.getQuestionByUserId);
 
 module.exports = router;
