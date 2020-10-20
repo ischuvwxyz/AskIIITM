@@ -29,3 +29,15 @@ exports.getAnswerForQues = catchAsync(async (req, res, next) => {
     answers
   });
 });
+
+exports.getMostUpvotedAnswerForQues = catchAsync(async (req, res, next) => {
+  const x = await Answer.find({ question: req.params.questionId });
+  const scores = x.map(el => el.upVote);
+  // commpare score which one have greatest
+  // calculate the index of that score
+  // find the answer for that particular index
+  res.status(200).json({
+    status: 'success',
+    answers
+  });
+});
